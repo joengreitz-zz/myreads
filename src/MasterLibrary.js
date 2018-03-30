@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class MasterLibrary extends Component {
-    /*TODO: Add propTypes to require array for books*/
+  static propTypes={
+    books: PropTypes.array.isRequired,
+  }
 
   render () {
     const {books} = this.props;

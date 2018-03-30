@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import Shelf from './Shelf'
 
 class MyBooks extends Component {
-  /*TODO: add propTypes to require array for books*/
+  static propTypes = {
+    books: PropTypes.array.isRequired
+  }
 
   render() {
     const {books}=this.props

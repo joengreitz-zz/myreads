@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import MasterLibrary from './MasterLibrary'
 
+
 class Shelf extends Component {
-  /*TODO: Add propTypes to require string for title and array for books*/
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    books: PropTypes.array.isRequired
+  }
+
   render () {
     const {title,books}=this.props
 
