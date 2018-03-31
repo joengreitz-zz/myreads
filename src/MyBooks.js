@@ -6,6 +6,7 @@ import Shelf from './Shelf'
 class MyBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
+    onShelfChange: PropTypes.func.isRequired
   }
 
   render() {
@@ -23,17 +24,17 @@ class MyBooks extends Component {
               <Shelf
                 title='Currently Reading'
                 onChangeShelf={onChangeShelf}
-                books={books}
+                books={books.filter(books => books.shelf === 'currentlyReading')}
               />
               <Shelf
                 title='Want To Read'
                 onChangeShelf={onChangeShelf}
-                books={books}
+                books={books.filter(books => books.shelf === 'wantToRead')}
               />
               <Shelf
                 title='Read'
                 onShelfChange={onChangeShelf}
-                books={books}
+                books={books.filter(books => books.shelf === 'read')}
               />
             </div>
           </div>
