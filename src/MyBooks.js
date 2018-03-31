@@ -5,11 +5,11 @@ import Shelf from './Shelf'
 
 class MyBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
   }
 
   render() {
-    const {books}=this.props
+    const {books, onChangeShelf}=this.props
     /*TODO: Organize book by shelf*/
     /*TODO: Pass book as prop to correct Shelf*/
     return (
@@ -22,14 +22,17 @@ class MyBooks extends Component {
             <div>
               <Shelf
                 title='Currently Reading'
+                onChangeShelf={onChangeShelf}
                 books={books}
               />
               <Shelf
                 title='Want To Read'
+                onChangeShelf={onChangeShelf}
                 books={books}
               />
               <Shelf
                 title='Read'
+                onShelfChange={onChangeShelf}
                 books={books}
               />
             </div>
