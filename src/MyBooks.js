@@ -11,8 +11,6 @@ class MyBooks extends Component {
 
   render() {
     const {books, onChangeShelf}=this.props
-    /*TODO: Organize book by shelf*/
-    /*TODO: Pass book as prop to correct Shelf*/
     return (
       <div>
         <div className="list-books">
