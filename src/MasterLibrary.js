@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 class MasterLibrary extends Component {
   static propTypes={
     books: PropTypes.array.isRequired,
-    onChangeShelf: PropTypes.func.isRequired
+    onShelfChange: PropTypes.func.isRequired
   }
 
   render () {
-    const {books, onChangeShelf} = this.props
+    const {books, onShelfChange} = this.props
     return (
       <div>
       <ol className="books-grid">
@@ -18,7 +18,7 @@ class MasterLibrary extends Component {
               <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                 <div className="book-shelf-changer">
-                  <select defaultValue={book.shelf} onChange={(e) => onChangeShelf(book, e.target.value)}>
+                  <select defaultValue={book.shelf} onChange={(event) => onShelfChange(book, event.target.value)}>
                     <option value="none" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>
