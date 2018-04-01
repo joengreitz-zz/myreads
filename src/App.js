@@ -34,7 +34,9 @@ class BooksApp extends Component {
         )}/>
         <Route path='/search' render={(/*TODO: add history tracking*/) => (
           <SearchPage
-            books={this.state.books}/>
+            books={this.state.books}
+            onShelfChange={this.shelfChange}
+          />
         )}/>
       </div>
     )

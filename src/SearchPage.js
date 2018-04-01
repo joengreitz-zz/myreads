@@ -10,7 +10,7 @@ class SearchPage extends Component {
   }
 
   updateQuery = (query) => {
-  this.setState({ query: query.trim() })
+  this.setState({ query })
   BooksAPI.search(query.trim()).then(books => {
     this.setState({results: books})
   })
