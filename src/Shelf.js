@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MasterLibrary from './MasterLibrary'
-
+import * as BooksAPI from './BooksAPI'
 
 class Shelf extends Component {
   static propTypes = {
@@ -9,6 +9,14 @@ class Shelf extends Component {
     books: PropTypes.array.isRequired,
     onShelfChange: PropTypes.func.isRequired,
   }
+
+  shelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(data => {
+      this.setState(({ books }) => ({
+        books:books.filter(b =>
+          b.id === book.id ? b.shelf = shelf : b
+        )}))
+    })}
 
   render () {
     const {title, books, onShelfChange}=this.props

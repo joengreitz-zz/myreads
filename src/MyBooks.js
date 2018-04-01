@@ -22,17 +22,17 @@ class MyBooks extends Component {
               <Shelf
                 title='Currently Reading'
                 onShelfChange={onShelfChange}
-                books={books.filter(books => books.shelf === 'currentlyReading')}
+                books={books.filter(b => b.shelf === 'currentlyReading')}
               />
               <Shelf
                 title='Want To Read'
                 onShelfChange={onShelfChange}
-                books={books.filter(books => books.shelf === 'wantToRead')}
+                books={books.filter(b => b.shelf === 'wantToRead')}
               />
               <Shelf
                 title='Read'
                 onShelfChange={onShelfChange}
-                books={books.filter(books => books.shelf === 'read')}
+                books={books.filter(b => b.shelf === 'read')}
               />
             </div>
           </div>

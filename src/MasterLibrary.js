@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 class MasterLibrary extends Component {
   static propTypes={
     books: PropTypes.array.isRequired,
-    onShelfChange: PropTypes.func.isRequired,
+    onShelfChange: PropTypes.func.isRequired
   }
 
   render () {
-    const {books, onShelfChange} = this.props;
+    const {books, onShelfChange} = this.props
     return (
       <div>
       <ol className="books-grid">

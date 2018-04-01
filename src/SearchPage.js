@@ -16,7 +16,16 @@ class SearchPage extends Component {
   })
   }
 
+  shelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(data => {
+      this.setState(({ books }) => ({
+        books:books.filter(b =>
+          b.id === book.id ? b.shelf = shelf : b
+        )}))
+    })}
+
   render() {
+    const {onShelfChange} = this.props
     const {query, results} = this.state
 
     return (
@@ -43,6 +52,7 @@ class SearchPage extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             <MasterLibrary
+              onShelfChange={onShelfChange}
               books={results}
             />
           </ol>
