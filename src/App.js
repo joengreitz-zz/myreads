@@ -15,11 +15,11 @@ class BooksApp extends Component {
       this.setState({books})
     })}
 
-  shelfChange (book, shelf) {
+  shelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(data => {
       this.setState(({ books }) => ({
-        books:books.filter(book =>
-          book.id === book.id ? book.shelf = shelf : book
+        books:books.filter(b =>
+          b.id === book.id ? b.shelf = shelf : b
         )}))
     })}
 
