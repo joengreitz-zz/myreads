@@ -2,30 +2,29 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import MasterLibrary from './MasterLibrary'
 import * as BooksAPI from './BooksAPI'
+import PropTypes from 'prop-types';
 
 class SearchPage extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+  }
+  
   state = {
     query: '',
     results: [],
   }
 
   updateQuery = (query) => {
-  this.setState({ query })
-  BooksAPI.search(query.trim()).then(books => {
-    this.setState({results: books})
-  })
+    this.setState({ query: query })
+    if (query.trim().length > 0) {
+      BooksAPI.search(query).then(books => {
+        this.setState({results: books})
+      })
+    }
   }
 
-  shelfChange = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(data => {
-      this.setState(({ books }) => ({
-        books:books.filter(b =>
-          b.id === book.id ? b.shelf = shelf : b
-        )}))
-    })}
-
   render() {
-    const {onShelfChange} = this.props
+    const {books, onShelfChange} = this.props
     const {query, results} = this.state
 
     return (
@@ -45,16 +44,16 @@ class SearchPage extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={(event) => this.updateQuery(event.target.value)}
+              onChange={(e) => this.updateQuery(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            <MasterLibrary
-              onShelfChange={onShelfChange}
-              books={results}
-            />
+              <MasterLibrary
+                onShelfChange={onShelfChange}
+                books={results}
+              />
           </ol>
         </div>
       </div>

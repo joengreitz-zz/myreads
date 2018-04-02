@@ -17,11 +17,20 @@ class BooksApp extends Component {
 
   shelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(data => {
-      this.setState(({ books }) => ({
-        books:books.filter(b =>
-          b.id === book.id ? b.shelf = shelf : b
-        )}))
-    })}
+      this.setState(({ books }) => {
+        const bookShelved = books.find(b => (b.id === book.id))
+
+        /*If book previously assigned to a shelf find book in MasterLibrary and change shelf*/
+        if (bookShelved) {
+          return {
+            books: books.filter(b => b.id === book.id? b.shelf = shelf : b)
+          }
+        }
+
+        
+      })
+    })
+  }
 
   render() {
     return (
