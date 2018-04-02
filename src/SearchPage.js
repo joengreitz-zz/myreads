@@ -7,26 +7,36 @@ class SearchPage extends Component {
 
   state = {
     query: '',
-    books_library: [],
+    books_library: []
   }
 
   displaySearch = () => {
-    const {query, books_library} = this.state
-    return (
-      books_library.map((book, i) => (
-        <li key={i}>
-          <Book
-            book={book}
-            moveBook={this.props.moveBook}
-          />
-        </li>
-      ))
-    )
+    const {query , books_library} = this.state
+    const {shelfChange} = this.props
+    if (query === '') {
+      console.log('query is empty')
+    }
+    else  {
+      return (
+        books_library.map((book, i) => (
+          <li key={i}>
+            <Book
+              book={book}
+              shelfChange={shelfChange}
+            />
+          </li>
+        ))
+      )
+    }
   }
 
   getBooks = (query) => {
     if(query) {
-      BooksAPI.search(query,20).then(books => {
+    BooksAPI.search(query,20).then(books => {
+      if (!books || books.hasOwnProperty('error')) {
+        this.setState({books_library: []})
+      }
+      else {
         let temp_books = books.map((book) => {
           book.shelf = "none"
           for(let i=0; i < this.props.temp_list.length; i++) {
@@ -37,13 +47,12 @@ class SearchPage extends Component {
             }
           }
           return book
-          })
-          console.log(temp_books)
-          this.setState({books_list: temp_books})
-          }
-        )
-    }
-  }
+        })
+        console.log(temp_books)
+        this.setState({books_list: temp_books})
+        }
+      }).catch(err => console.log(err, 'error occured'))
+  }}
 
     updateQuery = (query) => {
       this.setState({query: query})
@@ -51,12 +60,12 @@ class SearchPage extends Component {
     }
 
   render() {
-    const {book} = this.props
-    console.log('render', this.state.query)
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link className="close-search" to='/'>Close</Link>
+          <Link className="close-search" to='/'>
+            Close
+          </Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -67,15 +76,18 @@ class SearchPage extends Component {
               you don't find a specific author or title. Every search is limited by search terms.
             */}
             <input
-              type="text"
               placeholder="Search by title or author"
-              onChange={(e) => this.updateQuery(e.target.value)}
+              type="text"
+              value={this.state.query}
+              onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-              {this.displaySearch()}
+              {
+                this.displaySearch()
+              }
           </ol>
         </div>
       </div>
