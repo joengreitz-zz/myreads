@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import SearchPage from './SearchPage'
 import MyBooks from './MyBooks'
 import * as BooksAPI from './BooksAPI'
@@ -7,7 +7,7 @@ import './App.css'
 
 class BooksApp extends Component {
   state = {
-    books: []
+    books_library: []
   }
 
   componentDidMount () {
@@ -26,8 +26,6 @@ class BooksApp extends Component {
             books: books.filter(b => b.id === book.id? b.shelf = shelf : b)
           }
         }
-
-        
       })
     })
   }

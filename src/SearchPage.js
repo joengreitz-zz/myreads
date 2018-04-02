@@ -1,32 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import MasterLibrary from './MasterLibrary'
+import Book from './Book'
 import * as BooksAPI from './BooksAPI'
-import PropTypes from 'prop-types';
 
 class SearchPage extends Component {
-  static propTypes = {
-    books: PropTypes.array.isRequired,
-  }
-  
+
   state = {
     query: '',
-    results: [],
+    books_library: [],
   }
 
-  updateQuery = (query) => {
-    this.setState({ query: query })
-    if (query.trim().length > 0) {
-      BooksAPI.search(query).then(books => {
-        this.setState({results: books})
-      })
+  displaySearch = () => {
+    const {query, books_library} = this.state
+    return (
+      books_library.map((book, i) => (
+        <li key={i}>
+          <Book
+            book={book}
+            moveBook={this.props.moveBook}
+          />
+        </li>
+      ))
+    )
+  }
+
+  getBooks = (query) => {
+    if(query) {
+      BooksAPI.search(query,20).then(books => {
+        let temp_books = books.map((book) => {
+          book.shelf = "none"
+          for(let i=0; i < this.props.temp_list.length; i++) {
+            if(book.id === this.props.temp_list[i].id) {
+              book.shelf = this.props.temp_list[i].shelf
+              console.log(book.shelf)
+              break;
+            }
+          }
+          return book
+          })
+          console.log(temp_books)
+          this.setState({books_list: temp_books})
+          }
+        )
     }
   }
 
-  render() {
-    const {books, onShelfChange} = this.props
-    const {query, results} = this.state
+    updateQuery = (query) => {
+      this.setState({query: query})
+      this.getBooks(query)
+    }
 
+  render() {
+    const {book} = this.props
+    console.log('render', this.state.query)
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -43,17 +69,13 @@ class SearchPage extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={query}
               onChange={(e) => this.updateQuery(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-              <MasterLibrary
-                onShelfChange={onShelfChange}
-                books={results}
-              />
+              {this.displaySearch()}
           </ol>
         </div>
       </div>
